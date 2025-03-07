@@ -1,0 +1,59 @@
+name: Go CI/CD Workflow
+
+# This workflow will run when there is a push to the 'main' branch or when a pull request is made to 'main'.
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on push to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger the workflow on pull request targeting the main branch
+
+jobs:
+  # The build and test job
+  build_and_test:
+    runs-on: ubuntu-latest  # Use the latest version of Ubuntu
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2  # Checks out your repository
+
+      # Step 2: Set up Go environment
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.18'  # Set Go version you are using
+
+      # Step 3: Cache Go modules to speed up build times
+      - name: Cache Go modules
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      # Step 4: Install dependencies (tidy up go.mod and go.sum)
+      - name: Install Go dependencies
+        run: go mod tidy
+
+      # Step 5: Run tests (tests are defined in greet_test.go)
+      - name: Run tests
+        run: go test -v
+
+      # Step 6: Build the application (optional, generates a binary)
+      - name: Build the Go application (optional)
+        run: go build -o myapp
+
+      # Step 7: Upload any test artifacts or logs (optional)
+      - name: Upload test results (optional)
+        if: always()  # Run this step even if previous steps fail
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: ./test-results  # Optional path to test results (you can customize this)
+
+         
