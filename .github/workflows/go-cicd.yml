@@ -42,6 +42,20 @@ jobs:
       - name: Build project
         run: go build -v
 
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Save build data
+        run: |
+          echo "BUILD_TIMESTAMP=$(date)" > build_info.txt
+          echo "COMMIT_HASH=$(git rev-parse HEAD)" >> build_info.txt
+
+      - name: Upload build data
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-data
+          path: build_info.txt
+
       # Optional: Commit changes (if any generated files need to be pushed back)
       # Only run if build and tests are successful
       - name: Commit generated files
