@@ -43,7 +43,7 @@ jobs:
         run: go build -v
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Save build data
         run: |
@@ -51,7 +51,7 @@ jobs:
           echo "COMMIT_HASH=$(git rev-parse HEAD)" >> build_info.txt
 
       - name: Upload build data
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-data
           path: build_info.txt
