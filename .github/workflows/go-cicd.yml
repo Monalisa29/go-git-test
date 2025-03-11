@@ -55,6 +55,15 @@ jobs:
         with:
           name: build-data
           path: build_info.txt
+          
+      - name: Download build data
+        uses: actions/download-artifact@v4
+        with:
+          name: build-data
+
+      - name: Access build data
+        run: |
+          cat build_info.txt
 
       # Optional: Commit changes (if any generated files need to be pushed back)
       # Only run if build and tests are successful
