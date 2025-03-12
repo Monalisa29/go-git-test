@@ -53,8 +53,10 @@ jobs:
 
       # Step 5: Build the Go project (optional, if you want to create an executable)
       - name: Build project
-        run: go build -v
+        run: go build -v -o go-git-test
+
           echo "Build complete! Artifact is located at $(pwd)/go-git-test"
+          
       - name: Checkout code
         uses: actions/checkout@v4
 
