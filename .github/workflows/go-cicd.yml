@@ -59,7 +59,7 @@ jobs:
           echo "Build complete! Artifact is located at $(pwd)/go-git-test”
     
       - name: Upload the build artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
          name: go-git-test
          path: ./go-git-test
