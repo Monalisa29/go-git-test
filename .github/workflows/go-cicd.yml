@@ -56,7 +56,7 @@ jobs:
         run: go build -v
       - name: Checkout code
         uses: actions/checkout@v4
-          echo "Build complete! Artifact is located at $(pwd)/go-git-test”
+          echo "Build complete! Artifact is located at $(/Users/apple/go-git-test)/go-git-test”
     
       - name: Upload the build artifact
         uses: actions/upload-artifact@v4
