@@ -53,7 +53,7 @@ jobs:
 
       # Step 5: Build the Go project (optional, if you want to create an executable)
       - name: Build project
-        run: go build -v -o go-git-test
+        run: go build -v -o go-git-test | tee build_output.log
 
           echo "Build complete! Artifact is located at $(pwd)/go-git-test"
           
@@ -85,7 +85,8 @@ jobs:
         with:
           name: go-git-test
           path: ./go-git-test
-
+                ./build_output.log
+                
       - name: Print the build details
         run: |
           echo "Build logs are available in the artifact."
