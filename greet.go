@@ -1,9 +1,6 @@
 package main
-
-import "fmt"
-
-func main() {
-    fmt.Println("Hello, Git!")
+ 
+// Greet function returns a greeting message
+func Greet(name string) string {
+    return "Hello, " + name + "!"
 }
-
-
