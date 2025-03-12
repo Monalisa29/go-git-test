@@ -80,6 +80,16 @@ jobs:
         run: |
           cat build_info.txt
 
+      - name: Upload the build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: go-git-test
+          path: ./go-git-test
+
+      - name: Print the build details
+        run: |
+          echo "Build logs are available in the artifact."
+
       # Optional: Commit changes (if any generated files need to be pushed back)
       # Only run if build and tests are successful
       - name: Commit generated files
