@@ -23,6 +23,19 @@ jobs:
         with:
           go-version: '1.18'  # Specify the Go version to use
 
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up environment
+        run: |
+          echo "BUILD_TIMESTAMP=$(date)" >> $GITHUB_ENV
+          echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
+      - name: Print environment variables
+        run: |
+          echo "Build Timestamp: $BUILD_TIMESTAMP"
+          echo "Commit Hash: $COMMIT_HASH"	
+
       # Step 3: Cache Go modules to speed up the workflow
       - name: Cache Go modules
         uses: actions/cache@v3
