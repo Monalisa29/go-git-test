@@ -56,18 +56,27 @@ jobs:
         run: go build -v
       - name: Checkout code
         uses: actions/checkout@v4
-          echo "Build complete! Artifact is located at $(/Users/apple/go-git-test)/go-git-test”
-    
-      - name: Upload the build artifact
+
+      - name: Save build data
+        run: |
+          echo "BUILD_TIMESTAMP=$(date)" > build_info.txt
+          echo "COMMIT_HASH=$(git rev-parse HEAD)" >> build_info.txt
+
+      - name: Upload build data
         uses: actions/upload-artifact@v4
         with:
-         name: go-git-test
-         path: ./go-git-test
+          name: build-data
+          path: build_info.txt
+          
+      - name: Download build data
+        uses: actions/download-artifact@v4
+        with:
+          name: build-data
 
-      - name: Print the build details
+      - name: Access build data
         run: |
-         echo "Build logs are available in the artifact."
-      
+          cat build_info.txt
+
       # Optional: Commit changes (if any generated files need to be pushed back)
       # Only run if build and tests are successful
       - name: Commit generated files
